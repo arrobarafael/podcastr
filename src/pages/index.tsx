@@ -6,12 +6,24 @@
 //SSG
 ////getStaticProps
 
-export default function Home(props) {
-  console.log(props);
+import { GetStaticProps } from 'next';
+
+type Episode = {
+  id: string;
+  title: string;
+  members: string;
+};
+
+type HomeProps = {
+  // episodes: Array<Episode>;
+  episodes: Episode[];
+};
+
+export default function Home(props: HomeProps) {
   return <h1>index</h1>;
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const response = await fetch(`http://localhost:3333/episodes`);
   const data = await response.json();
 
@@ -21,4 +33,4 @@ export async function getStaticProps() {
     },
     revalidate: 60 * 60 * 8,
   };
-}
+};
